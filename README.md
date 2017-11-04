@@ -6,9 +6,11 @@ Part I: design an application that can store three hollywood movie production co
 Part II: Produce a display that shows a) the number of lines and words in each movie script for each Actor, and,  b) the number of times the Actor's character will be mentioned in each script by other Actors (for instance, Actor plays "Mad Max", this is a count of how many times a reference to "Max" or "Mad Max" by another character is made in the script)
 
 Language: PHP
+
 Database: MySql
 
 Tables Created: 
+
 1.PRODUCTION_COMPANY(PRODUCTION_COMPANY_ID, PRODUCTION_COMPANY_NAME)
 2.ACTOR_LIST(ACTOR_ID,ACTOR_NAME)
 3.REVENUE_PER_MOVIE(MOVIE_ID,PRODUCTION_COMPANY_ID,MOVIE_NAME,MOVIE_BUDGET,MOVIE_REVENUE)

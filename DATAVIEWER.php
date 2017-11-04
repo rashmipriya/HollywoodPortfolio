@@ -1,7 +1,9 @@
 <?php
 
+   //this class is used to display data by select queries. This helps to separate the front end and back end functionalities.
+   
    class DATAVIEWER extends DAL {
-
+ 
     public function showAllActorRevenue(){
    
        $datas = $this->getAllActorRevenue();
@@ -93,5 +95,6 @@
 	   }
 	  }	   
 	}
+	
    }
 ?>

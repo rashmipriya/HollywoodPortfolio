@@ -2,6 +2,7 @@
 
    class DAL extends DBCONNECT {
       
+	  //below function calculates actor revenues.
 	  protected function getAllActorRevenue() {
 		  
 		    $sql = "SELECT ACTOR_NAME, SUM(BASE_AMOUNT) AS BASE_AMOUNT, SUM((CASE WHEN (MOVIE_REVENUE-MOVIE_BUDGET) > 0 
@@ -13,6 +14,7 @@
 			return $this->executeQuery($sql);
 	  }
 	  
+	  //below function calculates Production Company Revenue.
 	  protected function getProductionCompanyRevenue(){
 		  
 		 $sql = "SELECT PRODUCTION_COMPANY_NAME, SUM(MOVIE_REVENUE) as Revenue, 
@@ -23,6 +25,7 @@
 			return $this->executeQuery($sql);
 	  }
 	  
+	  //below function gets an actor's movies and base amount charged in each.
       protected function getActorInfo($actor_name){
 		  
 		$sql ="SELECT ACTOR_LIST.ACTOR_NAME AS ACTOR_NAME, MOVIE_NAME, BASE_AMOUNT from ACTOR_LIST LEFT JOIN 
@@ -32,7 +35,8 @@
 			  
 	    return $this->executeQuery($sql);
 		}
-		
+	
+     //below function calculates number of lines and words in a script.	
 	  protected function getScriptInfo(){
 	   
 	   $sql= "SELECT MOVIE_NAME, ACTOR_NAME, CHARACTER_NAME, LINES_IN_THE_MOVIE,
@@ -45,6 +49,7 @@
 	   return $this->executeQuery($sql);
 	  }
 	  
+	  //below function counts number of times a character's reference is made by other character.
 	  protected function getCharacterReferenceInfo(){
 		  
 	  $sql= "SELECT MOVIE_NAME, CHARACTER_NAME, SUM(round(CASE WHEN CHARACTER_NAME LIKE '% %' THEN((length(LINES_IN_THE_MOVIE)-
@@ -59,9 +64,14 @@
 			
 	    return $this->executeQuery($sql);
 	  }
-	  
+	 
+     //function to execute a select query	 
 	 protected function executeQuery($sql){
 		 
+		if (!$this->connect()) {
+         die("Connection failed: " . mysqli_connect_error());
+        }
+		else{
 		$result = $this->connect()->query($sql);
 	    $numRows = $result->num_rows;
 	   
@@ -70,9 +80,11 @@
 		      $data[]=$row;
 		  }  
 	    return $data;
-	  }		 
+	      }
+		}	  
 	 }
 	 
+	 //function to add an actor.
 	 public function addactor($actor_name) {
 		    
 			$sqltocheck ="SELECT ACTOR_NAME FROM ACTOR_LIST WHERE ACTOR_NAME='$actor_name'";
@@ -81,11 +93,17 @@
 				echo 'An Actor with same name already exists in the database. Please try a different name.'. "<br />";
 			}else{
 		    $sql = "INSERT INTO ACTOR_LIST(ACTOR_NAME) VALUES('$actor_name')";
+			if (!$this->connect()) {
+            die("Connection failed: " . mysqli_connect_error());
+            }else{
 			$this->connect()->query($sql);
-			echo("<script>alert('Data added successfully!')</script>");
+			echo("<script>alert('".$actor_name." was added successfully!')</script>");
             echo("<script>window.location = 'addactor.php';</script>");
 			}
+		}
 	  }
+	  
+	  //function to add movies to the database.
 	 public function addmovies($movie_name, $production_company_Id,$movie_budget,$movie_revenue) {
 		    
 			$sqltocheckproductionid ="SELECT PRODUCTION_COMPANY_ID FROM PRODUCTION_COMPANY WHERE PRODUCTION_COMPANY_ID='$production_company_Id'";
@@ -108,13 +126,17 @@
 			else{
 		    $sql = "INSERT INTO REVENUE_PER_MOVIE(`PRODUCTION_COMPANY_ID`, `MOVIE_NAME`, `MOVIE_BUDGET`, `MOVIE_REVENUE`)
 			        VALUES('$production_company_Id','$movie_name','$movie_budget','$movie_revenue')";
+					if (!$this->connect()) {
+            die("Connection failed: " . mysqli_connect_error());
+            }else{		
 			$this->connect()->query($sql);
-			echo("<script>alert('Data added successfully!')</script>");
+			echo("<script>alert(' Movie Name: ".$movie_name." Production Id: ".$production_company_Id." Budget: ".$movie_budget." Revenue ".$movie_revenue." added successfully!')</script>");
             echo("<script>window.location = 'addmovies.php';</script>");
-			
+			}
 			}
 	 }
 	 
+	 //function to add actors, characters, base amounts and revenues to the database.
 	 public function addmoviedetails($movie_name,$actors,$characters,$baseamounts,$revenues){
 		$sqltocheckmovie ="SELECT MOVIE_ID FROM REVENUE_PER_MOVIE WHERE MOVIE_NAME='$movie_name'";
 		$sqltocheckactors ="SELECT ACTOR_NAME FROM ACTOR_LIST WHERE ACTOR_NAME IN ('$actors[0]','$actors[1]','$actors[2]','$actors[3]')";
@@ -143,14 +165,35 @@
 			 $actor= $actorid['ACTOR_ID'];
              $sqltoinsertactorrevenuepermovie="INSERT INTO ACTOR_REVENUE_PER_MOVIE( `ACTOR_ID`,`MOVIE_ID`,`BASE_AMOUNT`,`REVENUE_SHARE`) 
 			                                  VALUES ('$actor','$id','$baseamounts[$i]','$revenues[$i]')";
+			if (!$this->connect()) {
+            die("Connection failed: " . mysqli_connect_error());
+            }else{								  
 			 $this->connect()->query($sqltoinsertactorrevenuepermovie);
-			 $sqltoinsertcharacters="INSERT INTO MOVIE_CHARACTERS( `CHARACTER_NAME`,`ACTOR_ID`,`MOVIE_ID`) 
+			}
+			$sqltoinsertcharacters="INSERT INTO MOVIE_CHARACTERS( `CHARACTER_NAME`,`ACTOR_ID`,`MOVIE_ID`) 
 			                                  VALUES ('$characters[$i]','$actor','$id')";
-			 $this->connect()->query($sqltoinsertcharacters);
+			if (!$this->connect()) {
+            die("Connection failed: " . mysqli_connect_error());
+            }else{
+			$this->connect()->query($sqltoinsertcharacters);
 		    }
-            echo("<script>alert('All enteries were added successfully!')</script>");
-            echo("<script>window.location = 'addcharactertomovie.php';</script>");
-		}
+			}
+			for($i=0; $i < 4; $i ++){
+		        $actor_name = $actors[$i];
+				$character_name= $characters[$i];
+				$base_amount =$baseamounts[$i];
+				$revenue= $revenues[$i];
+				echo "<tr>";
+				echo "<th>$movie_name</th>";
+				echo "<th>$actor_name</th>";
+				echo "<th>$character_name</th>";
+				echo "<th>$base_amount</th>";
+				echo "<th>$revenue</th>";
+				echo "</tr>";
+			}
+	        }
+            //echo("<script>alert('All enteries were added successfully!')</script>");
+            //echo("<script>window.location = 'addcharactertomovie.php';</script>");
 		}
    }
 ?>

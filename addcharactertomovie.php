@@ -39,6 +39,15 @@ include 'DAL.php';
 <tr><td><input type='submit' value="Submit"> <br/> <br/></td></tr>
 </table>
 </form>
+<h4>Entered data is below: </h4>
+<table width="100%" style="max-width:50%;" align="center" border="1px">
+    <tr>
+	    <th>Movie Name</th>
+	    <th>Actor Name</th>
+        <th>Character Name</th>
+		<th>Base Amount</th>
+		<th>Revenue Share</th>
+    </tr>
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	

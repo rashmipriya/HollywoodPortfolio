@@ -117,7 +117,7 @@
 	 
 	 public function addmoviedetails($movie_name,$actors,$characters,$baseamounts,$revenues){
 		$sqltocheckmovie ="SELECT MOVIE_ID FROM REVENUE_PER_MOVIE WHERE MOVIE_NAME='$movie_name'";
-		$sqltocheckactors ="SELECT ACTOR_NAME FROM ACTOR_LIST";
+		$sqltocheckactors ="SELECT ACTOR_NAME FROM ACTOR_LIST WHERE ACTOR_NAME IN ('$actors[0]','$actors[1]','$actors[2]','$actors[3]')";
 		$resultmovie = $this->connect()->query($sqltocheckmovie);
 		$resultactors = $this->connect()->query($sqltocheckactors);
 	    $numRowmovie = $resultmovie->num_rows;
@@ -126,7 +126,8 @@
 		    echo 'Movie Name does not exist. You can add a new movie below'. "<br />";
 		    $link_address = 'addmovies.php';
 			echo "<a href='".$link_address."'>Click here to Add Movies</a>". "<br />";
-		}else if($numRowactors != $actors[0] || $numRowactors != $actors[1] || $numRowactors != $actors[2]  || $numRowactors != $actors[3] ){
+		}
+		else if($numRowactors < 4){
 			echo 'All/Some actor names are not correct. Please check the actor names. You can add a new actor below'. "<br />";
 		    $link_address = 'addactor.php';
 			echo "<a href='".$link_address."'>Click here to Add Actor</a>". "<br />";

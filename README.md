@@ -41,7 +41,7 @@ Database: MySql
 10.MySQL_Queries: With all table definitions.
 
 **Project Description with assumptions:
-
+Note:For the simplicity, I have added only few validations on each page.
 **index.php
 
 This page displays two tables. The first table is list of all actors in the database with their total revenue. Based on the requirement, an actor's revenue is calculated by summing the base amount with the revenue share of the movies they were part of. To calculate actor's revenue, I assumed that each actor might have different base amount and different revenue share percentages for each movie (which I stored in ACTOR_REVENUE_PER_MOVIE table). I also assumed that an actor gets the percentages of her/his revenue share only if the movie makes a profit. So, I collect MOVIE_BUDGET and MOVIE_REVENUE from REVENUE_PER_MOVIE table and calculate the percentage share if there was a profit else revenue share is considered to be 0 and it adds up to the base amount to get total actor revenue.
@@ -56,7 +56,7 @@ This UI allows searching for the entered actor name and displays the actor's mov
 
 This page displays script details.I have created two tables for this requirement. MOVIE_CHARACTERS table that has details of CHARACTER_NAME, ACTOR_ID and MOVIE_ID and MOVIE_SCRIPT table that CHARACTER_ID,MOVIE_ID and LINES_IN_THE_MOVIE. I have assumed that the data is given to us in such a way that we can store lines of each character in a movie in the column LINES_IN_THE_MOVIE. For simplicity, I have also assumed that each word is separated by spaces and each sentence ends in a period. Based on this I calculate number of lines of a character in the script and number of words of a character in the script. 
 
-To fulfill the second requirement to count number of occurences of a Actor's character name in each script by other Actors, for simplicity I assumed that the CHARACTER_NAME is stored as either firstname (example "Jerry") or firstname lastname(eg: "Jerry Seinfeld") and valid call to a character is made when the character is either called by the full name("Jerry Seinfeld) or by the last name("Seinfeld"). I count by either searching the full name of the character being referenced by other others or by just last name.  
+To fulfill the second requirement that was to count number of occurences of a Actor's character name in each script by other Actors, for simplicity I assumed that the CHARACTER_NAME is stored as either firstname (example "Jerry") or firstname lastname(eg: "Jerry Seinfeld") and valid call to a character is made when the character is either called by the full name("Jerry Seinfeld) or by the last name("Seinfeld"). The search is case-sensitive. I count by either searching the full name of the character being referenced by other characters or by just last name.  
 
 **addactor.php
 
@@ -64,9 +64,9 @@ This UI allows adding a new actor in the database. I have added two validations 
 
 **addmovies.php
 
-This UI allows adding a new movie to the database. To add a new movie, a user must enter the production company it is associated with and the budget and revenue. I have added following validations here. One is all fields must be entered, same movie name should not exist in the database, production company Id must be available (for the project as we have considered only three production companies, the user can enter any one among three and if entered wrond, a menu of production companies is displayed) and the movie budget and revenue must be numbers.
+This UI allows adding a new movie to the database. To add a new movie, a user must enter the production company it is associated with and the budget and revenue. I have added following validations here. One is all fields must be entered, same movie name should not exist in the database, production company Id must match with anyone production company Id in the database (for the project as we have considered only three production companies, the user can enter any one among three and if entered wrong, a menu of production companies is displayed) and the movie budget and revenue must be numbers.
 
 **addcharactertomovie.php 
 
-This UI allows to enter 4 actors, corresponding character names, base amount and revenue share to a movie.
-I have added some validations here. All fields must be entered. The movie for which the data is entered should already exist in the database. The actors entered must also be available in the database and to enter in the database, for simplicity, I have assumed that all actors name should be available in the database to enter the database correctly.
+This UI allows to enter 4 actors, corresponding character names, base amount and revenue share to a movie. As the requirement says there are 4 core actors, I have assumed in the project that there must be 4 actors to be added.
+I have added some validations here. All fields must be entered. The movie for which the data is entered should already exist in the database. The actors entered must also be available in the database and for the successfull entry in the database, for simplicity, I have assumed that "all" actors name should be available in the database.

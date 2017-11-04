@@ -41,7 +41,9 @@ Database: MySql
 10.MySQL_Queries: With all table definitions.
 
 **Project Description with assumptions:
-Note:For the simplicity, I have added only few validations on each page.
+
+Please note:For the simplicity of this project, I have added only few validations on each page.
+
 **index.php
 
 This page displays two tables. The first table is list of all actors in the database with their total revenue. Based on the requirement, an actor's revenue is calculated by summing the base amount with the revenue share of the movies they were part of. To calculate actor's revenue, I assumed that each actor might have different base amount and different revenue share percentages for each movie (which I stored in ACTOR_REVENUE_PER_MOVIE table). I also assumed that an actor gets the percentages of her/his revenue share only if the movie makes a profit. So, I collect MOVIE_BUDGET and MOVIE_REVENUE from REVENUE_PER_MOVIE table and calculate the percentage share if there was a profit else revenue share is considered to be 0 and it adds up to the base amount to get total actor revenue.
@@ -69,4 +71,4 @@ This UI allows adding a new movie to the database. To add a new movie, a user mu
 **addcharactertomovie.php 
 
 This UI allows to enter 4 actors, corresponding character names, base amount and revenue share to a movie. As the requirement says there are 4 core actors, I have assumed in the project that there must be 4 actors to be added.
-I have added some validations here. All fields must be entered. The movie for which the data is entered should already exist in the database. The actors entered must also be available in the database and for the successfull entry in the database, for simplicity, I have assumed that "all" actors name should be available in the database.
+I have added some validations here. All fields must be entered. The movie for which the data is entered should already exist in the database. The actors entered must also be available in the database and for the successfull entry in the database, for simplicity, I have assumed that "all" actors name should be available in the database.I have also restricted the addition of same chracters to movies more than once by making ACTOR_ID and MOVIE_ID as the composite key for ACTOR_REVENUE_PER_MOVIE. So, if a user tries to enter same data again, even though the front end tells data entry successfully, the data is not added in the backend.

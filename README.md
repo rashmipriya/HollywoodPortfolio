@@ -19,15 +19,25 @@ Tables Created:
 6.MOVIE_SCRIPT(CHARACTER_ID,MOVIE_ID,LINES_IN_THE_SCRIPT)
 
 PHP files used:
+
 1.index.php : Home Page that displays Part I requirements and gives navigation to the rest of the links.
+
 2.actormoviemap.php : That searches for the entered actor name and displays the actor's movies and corresponding base amounts.
+
 3.scriptdetails.php: To see Script Details based on Part II requirement.
+
 4.addactor.php : To add a new Actor.
+
 5.addmovies.php :To add a new movie.
+
 6.addcharactertomovie.php :To add 4 actors, corresponding character names, base amount and revenue share to a movie.
+
 7.DBCONNECT.php: Contains database connection details.
+
 8.DAL.php: The data access layer that performs reads and writes to the database.
+
 9.DATAVIEWER.php: This php helps in displaying the data back to the corresponding pages.
+
 10.MySQL_Queries: With all table definitions.
 
 Project Description with assumptions:

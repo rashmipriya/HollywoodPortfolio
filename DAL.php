@@ -127,18 +127,17 @@
 		    $link_address = 'addmovies.php';
 			echo "<a href='".$link_address."'>Click here to Add Movies</a>". "<br />";
 		}else if($numRowactors != $actors[0] || $numRowactors != $actors[1] || $numRowactors != $actors[2]  || $numRowactors != $actors[3] ){
-		    echo 'All/Some actor names are not correct. Please check the actor names. You can add a new actor below'. "<br />";
+			echo 'All/Some actor names are not correct. Please check the actor names. You can add a new actor below'. "<br />";
 		    $link_address = 'addactor.php';
 			echo "<a href='".$link_address."'>Click here to Add Actor</a>". "<br />";
 		}
 		else{
-		$result = $this->connect()->query($sqltocheckmovie);
-		$movieid= $result -> fetch_assoc(); 
-        $id= $movieid['MOVIE_ID'];
-		for($i=0; $i < 4; $i ++){
+			$result = $this->connect()->query($sqltocheckmovie);
+		    $movieid= $result -> fetch_assoc(); 
+            $id= $movieid['MOVIE_ID'];
+		    for($i=0; $i < 4; $i ++){
 		   	 $sqltogetactorid ="SELECT ACTOR_ID FROM ACTOR_LIST WHERE ACTOR_NAME='$actors[$i]'";
 			 $results = $this->connect()->query($sqltogetactorid);
-	         $newnumRow = $results->num_rows;
 			 $actorid = $results -> fetch_assoc(); 
 			 $actor= $actorid['ACTOR_ID'];
              $sqltoinsertactorrevenuepermovie="INSERT INTO ACTOR_REVENUE_PER_MOVIE( `ACTOR_ID`,`MOVIE_ID`,`BASE_AMOUNT`,`REVENUE_SHARE`) 

@@ -5,6 +5,7 @@
     public function showAllActorRevenue(){
    
        $datas = $this->getAllActorRevenue();
+	   if($datas>0){
 	   foreach($datas as $data){
 	    $actor= $data["ACTOR_NAME"];
 		$actorrevenue =0;
@@ -16,11 +17,13 @@
 		   echo "<th>$actorrevenue</th>";
 		  echo "</tr>";
 	   }
+	   }
 	}
    
     public function showProductionCompanyRevenue(){
 		 
 	  $datas = $this->getProductionCompanyRevenue();
+	  if($datas>0){
 	  foreach($datas as $data){
 	    $ProductionCompanyName= $data["PRODUCTION_COMPANY_NAME"];
 		$Revenue = $data["Revenue"];
@@ -31,6 +34,7 @@
 		   echo "<th>$GainorLoss</th>";
 		   echo "</tr>";
 		 }	 
+	  }
 	}
 	
 	public function showActorInfo($actor_name){
@@ -54,6 +58,7 @@
 	public function showScriptInfo(){
 	
      $datas = $this->getScriptInfo();
+	 if($datas >0){
 	   foreach($datas as $data){
 		  $movie_name= $data['MOVIE_NAME'];
 		  $actor_name = $data['ACTOR_NAME'];
@@ -69,11 +74,13 @@
 		  echo "<th>$number_of_lines</th>";
 		  echo "<th>$number_of_words</th>";
 		  echo "</tr>";
-	   }	
+	   }
+	 }	   
 	}
 	
 	public function showCharacterReferenceInfo(){
 		$datas = $this->getCharacterReferenceInfo();
+		if($datas >0){
 	   foreach($datas as $data){
 		  $movie_name= $data['MOVIE_NAME'];
 		  $character_name = $data['CHARACTER_NAME'];
@@ -83,7 +90,8 @@
 	      echo "<th>$character_name</th>";
 		  echo "<th>$character_refrence</th>";
 		  echo "</tr>";
-	   }	
+	   }
+	  }	   
 	}
    }
 ?>

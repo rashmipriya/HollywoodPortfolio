@@ -14,8 +14,8 @@ include 'DAL.php';
 <table>
 <tr><td> Movie Name: </td><td><input type="text" align="centre" name="moviename" /><br/><br/></td></tr>
 <tr><td>Production Company Id: </td><td><input type="number" align="centre" name="productioncompanyId" /><br/><br/></td></tr>
-<tr><td>Movie Budget: </td><td><input type="number" align="centre" name="moviebudget" /><br/><br/></td></tr>
-<tr><td>Movie Revenue: </td><td><input type="number" align="centre" name="movierevenue" /><br/><br/> </td></tr>
+<tr><td>Movie Budget(in dollars): </td><td><input type="number" align="centre" name="moviebudget" /><br/><br/></td></tr>
+<tr><td>Movie Revenue(in dollars): </td><td><input type="number" align="centre" name="movierevenue" /><br/><br/> </td></tr>
 <tr><td><input type='submit' value="Submit"> <br/> <br/></td></tr>
 </table>
 </form>

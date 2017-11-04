@@ -34,10 +34,10 @@ $users= new DATAVIEWER();
 $users -> showProductionCompanyRevenue();
 ?>
 </table></br>	
-<a href="actor_movie_map.php">Click here to search an Actor's Movies and Base Amount </a></br></br>
-<a href="scriptdetails.php">Click here for Movie Script Details</a></br></br>
-<a href="addactor.php">Click here to a new Actor</a></br></br>
-<a href="addmovies.php">Click here to Add Movies</a></br></br>
-<a href="addcharactertomovie.php"> Click here to add movie details</a>
+<a href="actormoviemap.php">Click here to search an Actor's Movies and Base Amount. </a></br></br>
+<a href="scriptdetails.php">Click here for Movie Script Details.</a></br></br>
+<a href="addactor.php">Click here to a new Actor.</a></br></br>
+<a href="addmovies.php">Click here to Add Movies.</a></br></br>
+<a href="addcharactertomovie.php"> Click here to add actors, corresponding character names, base amount and revenue share to a movie.</a>
 </body>
 </html>

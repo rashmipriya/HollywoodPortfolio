@@ -19,7 +19,7 @@
 	        SUM(MOVIE_REVENUE)-SUM(MOVIE_BUDGET) as GainorLoss from PRODUCTION_COMPANY 
 	        LEFT JOIN REVENUE_PER_MOVIE on PRODUCTION_COMPANY.PRODUCTION_COMPANY_ID = REVENUE_PER_MOVIE.PRODUCTION_COMPANY_ID group 
 			by PRODUCTION_COMPANY.PRODUCTION_COMPANY_ID";
-			
+				
 			return $this->executeQuery($sql);
 	  }
 	  
@@ -88,9 +88,11 @@
 	  }
 	 public function addmovies($movie_name, $production_company_Id,$movie_budget,$movie_revenue) {
 		    
-			$sqltocheck ="SELECT PRODUCTION_COMPANY_ID FROM PRODUCTION_COMPANY WHERE PRODUCTION_COMPANY_ID='$production_company_Id'";
-			$datas = $this->executeQuery($sqltocheck);
-			if($datas ==0){
+			$sqltocheckproductionid ="SELECT PRODUCTION_COMPANY_ID FROM PRODUCTION_COMPANY WHERE PRODUCTION_COMPANY_ID='$production_company_Id'";
+			$sqltocheckmoviename ="SELECT MOVIE_NAME FROM REVENUE_PER_MOVIE WHERE MOVIE_NAME='$movie_name'";
+			$productiondata = $this->executeQuery($sqltocheckproductionid);
+			$moviedata = $this->executeQuery($sqltocheckmoviename);
+			if($productiondata ==0){
 				echo 'You have entered a wrong Production Company Id<br\>. Please find the menu of Production Company Id and Names'."<br />"."<br />";
 				$sqltogetmenu ="SELECT PRODUCTION_COMPANY_ID,PRODUCTION_COMPANY_NAME FROM PRODUCTION_COMPANY";
 			    $menu = $this->executeQuery($sqltogetmenu);
@@ -100,7 +102,10 @@
 				  echo $prodId. " ";
 				  echo $prodname. "<br />". "<br />";
 		        }
-			}else{
+			}else if($moviedata>0){
+				echo 'The movie name already exists in the database'."<br />"."<br />";
+			}
+			else{
 		    $sql = "INSERT INTO REVENUE_PER_MOVIE(`PRODUCTION_COMPANY_ID`, `MOVIE_NAME`, `MOVIE_BUDGET`, `MOVIE_REVENUE`)
 			        VALUES('$production_company_Id','$movie_name','$movie_budget','$movie_revenue')";
 			$this->connect()->query($sql);
@@ -110,7 +115,7 @@
 			}
 	 }
 	 
-	 public function addmoviedetails($movie_name,$first,$second,$third,$fourth){
+	 public function addmoviedetails($movie_name,$actors,$characters,$baseamounts,$revenues){
 		$sqltocheckmovie ="SELECT MOVIE_ID FROM REVENUE_PER_MOVIE WHERE MOVIE_NAME='$movie_name'";
 		$sqltocheckactors ="SELECT ACTOR_NAME FROM ACTOR_LIST";
 		$resultmovie = $this->connect()->query($sqltocheckmovie);
@@ -121,7 +126,7 @@
 		    echo 'Movie Name does not exist. You can add a new movie below'. "<br />";
 		    $link_address = 'addmovies.php';
 			echo "<a href='".$link_address."'>Click here to Add Movies</a>". "<br />";
-		}else if($numRowactors != $first[0] || $numRowactors != $first[1] || $numRowactors != $first[2]  || $numRowactors != $first[3] ){
+		}else if($numRowactors != $actors[0] || $numRowactors != $actors[1] || $numRowactors != $actors[2]  || $numRowactors != $actors[3] ){
 		    echo 'All/Some actor names are not correct. Please check the actor names. You can add a new actor below'. "<br />";
 		    $link_address = 'addactor.php';
 			echo "<a href='".$link_address."'>Click here to Add Actor</a>". "<br />";
@@ -131,14 +136,17 @@
 		$movieid= $result -> fetch_assoc(); 
         $id= $movieid['MOVIE_ID'];
 		for($i=0; $i < 4; $i ++){
-		   	 $sqltogetactorid ="SELECT ACTOR_ID FROM ACTOR_LIST WHERE ACTOR_NAME='$first[$i]'";
+		   	 $sqltogetactorid ="SELECT ACTOR_ID FROM ACTOR_LIST WHERE ACTOR_NAME='$actors[$i]'";
 			 $results = $this->connect()->query($sqltogetactorid);
 	         $newnumRow = $results->num_rows;
 			 $actorid = $results -> fetch_assoc(); 
 			 $actor= $actorid['ACTOR_ID'];
              $sqltoinsertactorrevenuepermovie="INSERT INTO ACTOR_REVENUE_PER_MOVIE( `ACTOR_ID`,`MOVIE_ID`,`BASE_AMOUNT`,`REVENUE_SHARE`) 
-			                                  VALUES ('$actor','$id','$third[$i]','$fourth[$i]')";
+			                                  VALUES ('$actor','$id','$baseamounts[$i]','$revenues[$i]')";
 			 $this->connect()->query($sqltoinsertactorrevenuepermovie);
+			 $sqltoinsertcharacters="INSERT INTO MOVIE_CHARACTERS( `CHARACTER_NAME`,`ACTOR_ID`,`MOVIE_ID`) 
+			                                  VALUES ('$characters[$i]','$actor','$id')";
+			 $this->connect()->query($sqltoinsertcharacters);
 		    }
             echo("<script>alert('All enteries were added successfully!')</script>");
             echo("<script>window.location = 'addcharactertomovie.php';</script>");

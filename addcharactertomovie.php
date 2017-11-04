@@ -63,7 +63,7 @@ $fourthactorname = $_POST['fourthactorname'];
 $fourthcharactername= $_POST['fourthcharactername'];
 $fourthbaseamount= $_POST['fourthbaseamount'];
 $fourthrevenueshare= $_POST['fourthrevenueshare'];
-$required = array('firstactorname','firstcharactername','firstbaseamount','firstrevenueshare','secondactorname','secondcharactername','secondbaseamount',
+$required = array('moviename','firstactorname','firstcharactername','firstbaseamount','firstrevenueshare','secondactorname','secondcharactername','secondbaseamount',
                   'secondrevenueshare','thirdactorname','thirdcharactername','thirdbaseamount','thirdrevenueshare','fourthactorname',
 				  'fourthcharactername','fourthbaseamount','fourthrevenueshare');
 // Loop over field names, make sure each one exists and is not empty
@@ -76,12 +76,12 @@ foreach($required as $field) {
 if ($error) {
   echo("<script>alert('All fields are required.!')</script>");
 }else{
-$first = array($firstactorname,$secondactorname,$thirdactorname,$fourthactorname);
-$second = array($firstcharactername,$secondcharactername,$thirdcharactername,$fourthcharactername);
-$third = array($firstbaseamount,$secondbaseamount,$thirdbaseamount,$fourthbaseamount);
-$fourth = array($firstrevenueshare,$secondrevenueshare,$thirdrevenueshare,$fourthrevenueshare);
+$actors = array($firstactorname,$secondactorname,$thirdactorname,$fourthactorname);
+$characters= array($firstcharactername,$secondcharactername,$thirdcharactername,$fourthcharactername);
+$baseamounts = array($firstbaseamount,$secondbaseamount,$thirdbaseamount,$fourthbaseamount);
+$revenues = array($firstrevenueshare,$secondrevenueshare,$thirdrevenueshare,$fourthrevenueshare);
 $users= new DAL();
-$users -> addmoviedetails($movie_name,$first,$second,$third,$fourth);
+$users -> addmoviedetails($movie_name,$actors,$characters,$baseamounts,$revenues);
 }
 }
 ?>
